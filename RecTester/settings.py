@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import json
+import secrets
 from pathlib import Path
+
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +23,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'nkas^c)!4nclxwq4seclnwk5c=z&jma44t(at+=$v-+7g=+*@b'
+secrets_file = BASE_DIR / 'config'
+if secrets_file.exists():
+    secrets_config = json.loads(secrets_file.read_text())
+else:
+    secrets_config = {
+        'SECRET_KEY': secrets.token_hex(32),
+    }
+    secrets_file.touch(0o600)
+    secrets_file.write_text(json.dumps(secrets_config, indent=4))
+
+SECRET_KEY = secrets_config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', '0') == '1'
 
 ALLOWED_HOSTS = [
     '*'
