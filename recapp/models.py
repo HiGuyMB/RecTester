@@ -133,7 +133,11 @@ class Submission(models.Model):
             path = f'{settings.UPLOADS_PATH}/{hash}.rec'
             with open(path, 'wb') as f:
                 f.write(conts)
-            sub = Submission(file=path, name=name, hash=hash, upload_date=timezone.now())
+            form_data['file'] = path
+            form_data['name'] = name
+            form_data['hash'] = hash
+            form_data['upload_date'] = timezone.now()
+            sub = Submission(**form_data)
             sub.save()
 
         return sub

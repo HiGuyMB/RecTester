@@ -27,6 +27,14 @@
                 <td>{{ submission.expected_time|score }}</td>
             </tr>
         {% endif %}
+        <tr>
+            <td>Upload Date</td>
+            <td>{{ submission.upload_date }}</td>
+        </tr>
+        <tr>
+            <td>TAS Run?</td>
+            <td>{{ submission.is_tas|yesno|capfirst }}</td>
+        </tr>
         {% for run in runs %}
             <tr>
                 <td>&nbsp;</td>
@@ -67,7 +75,7 @@
             <tr>
                 <td>Score Time</td>
                 <td>
-                    {% if submission.expected_time and run.score.score_time != submission.expected_time %}
+                    {% if run.score.is_desync %}
                         <span class="desync">
                             {{ run.score.score_time|score }}
                             <strong>(Desync!)</strong>

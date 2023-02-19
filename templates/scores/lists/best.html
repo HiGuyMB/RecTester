@@ -13,11 +13,7 @@
                     </div>
                     <div class="spacer">&nbsp;</div>
                     <div>
-                        {% if score.is_desync %}
-                            <span class="desync">{{ score.score_time|score }}</span>
-                        {% else %}
-                            {{ score.score_time|score }}
-                        {% endif %}
+                        {{ score.run|run_time }}
                     </div>
                 </li>
             {% endfor %}
@@ -35,11 +31,7 @@
                     </div>
                     <div class="spacer">&nbsp;</div>
                     <div>
-                        {% if score.is_desync %}
-                            <span class="desync">{{ score.score_time|score }}</span>
-                        {% else %}
-                            {{ score.score_time|score }}
-                        {% endif %}
+                        {{ score.run|run_time }}
                     </div>
                 </li>
             {% endfor %}

@@ -13,24 +13,7 @@
                     </div>
                     <div class="spacer">&nbsp;</div>
                     <div>
-                        {% if run.score.success %}
-                            {% if run.score.is_desync %}
-                                <span class="desync">{{ run.score.score_time|score }}</span>
-                            {% else %}
-                                {{ run.score.score_time|score }}
-                            {% endif %}
-                        {% else %}
-                            Failure
-                        {% endif %}(win) vs
-                        {% if run2.score.success %}
-                            {% if run2.score.is_desync %}
-                                <span class="desync">{{ run2.score.score_time|score }}</span>
-                            {% else %}
-                                {{ run2.score.score_time|score }}
-                            {% endif %}
-                        {% else %}
-                            Failure
-                        {% endif %}(mac)
+                        {{ run|run_time }} (win) vs {{ run2|run_time }} (mac)
                     </div>
                 </li>
             {% empty %}
@@ -52,24 +35,7 @@
                     </div>
                     <div class="spacer">&nbsp;</div>
                     <div>
-                        {% if run.score.success %}
-                            {% if run.score.is_desync %}
-                                <span class="desync">{{ run.score.score_time|score }}</span>
-                            {% else %}
-                                {{ run.score.score_time|score }}
-                            {% endif %}
-                        {% else %}
-                            Failure
-                        {% endif %}(new) vs
-                        {% if run2.score.success %}
-                            {% if run2.score.is_desync %}
-                                <span class="desync">{{ run2.score.score_time|score }}</span>
-                            {% else %}
-                                {{ run2.score.score_time|score }}
-                            {% endif %}
-                        {% else %}
-                            Failure
-                        {% endif %}(win)
+                        {{ run|run_time }} (new) vs {{ run2|run_time }} (win)
                     </div>
                 </li>
             {% empty %}

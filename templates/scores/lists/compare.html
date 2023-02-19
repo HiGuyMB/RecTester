@@ -23,19 +23,7 @@
                         </a>
                     </div>
                     <div class="spacer">&nbsp;</div>
-                    {% if run.error %}
-                        <span>Errored</span>
-                    {% else %}
-                        {% if run.score.success %}
-                            {% if run.score.is_desync %}
-                                <span class="desync">{{ run.score.score_time|score }}</span>
-                            {% else %}
-                                <span>{{ run.score.score_time|score }}</span>
-                            {% endif %}
-                        {% else %}
-                            <span>Failed</span>
-                        {% endif %}
-                    {% endif %}
+                    {{ run|run_time }}
                 </li>
             {% empty %}
                 <li>
@@ -55,19 +43,7 @@
                         </a>
                     </div>
                     <div class="spacer">&nbsp;</div>
-                    {% if run.error %}
-                        <span>Errored</span>
-                    {% else %}
-                        {% if run.score.success %}
-                            {% if run.score.is_desync %}
-                                <span class="desync">{{ run.score.score_time|score }}</span>
-                            {% else %}
-                                <span>{{ run.score.score_time|score }}</span>
-                            {% endif %}
-                        {% else %}
-                            <span>Failed</span>
-                        {% endif %}
-                    {% endif %}
+                    {{ run|run_time }}
                 </li>
             {% empty %}
                 <li>

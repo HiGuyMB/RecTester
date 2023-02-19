@@ -342,9 +342,19 @@ def upload(request):
 
     if 'rec' not in request.FILES or len(request.FILES['rec']) == 0:
         return HttpResponseRedirect(reverse('recapp:upload') + '?' + urlencode([('error', 'No File Submitted')]))
+    if 'expected' not in request.POST:
+        return HttpResponseRedirect(reverse('recapp:upload') + '?' + urlencode([('error', 'Bad parameters')]))
+
+    expected_time = request.POST['expected']
+    try:
+        expected_time = int(expected_time)
+    except ValueError:
+        expected_time = None
 
     sub = Submission.create_or_find({
-        'file': request.FILES['rec']
+        'file': request.FILES['rec'],
+        'is_tas': request.POST.get('tas', 'off') == 'on',
+        'expected_time': expected_time
     })
 
     return HttpResponseRedirect(reverse('recapp:detail', args=[sub.id]))
