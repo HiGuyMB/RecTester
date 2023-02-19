@@ -1,0 +1,26 @@
+<nav class="navbar">
+    <div class="container container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="{% url 'recapp:index' %}" class="navbar-brand">Replay Center</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'recapp:newest' %}">Newest</a></li>
+                    <li><a href="{% url 'recapp:discrepancies' %}">Discrepancies</a></li>
+                    <li><a href="{% url 'recapp:best' %}">Best</a></li>
+                    <li><a href="{% url 'recapp:worst' %}">Worst</a></li>
+                    <li><a href="{% url 'recapp:upload' %}">Upload</a></li>
+                    <li><a href="{% url 'api-root' %}">API</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

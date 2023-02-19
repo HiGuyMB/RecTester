@@ -1,0 +1,111 @@
+{% extends 'scores/base.html' %}
+{% load scores %}
+
+{% block title %}{{ submission.name }}{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>{{ submission.name }}</h1>
+    </div>
+    <div>
+        <a href="{% url 'recapp:download' submission.id %}" class="btn btn-primary">Download</a>
+    </div>
+    <br>
+    {% if submission.runs.all|length == 0 %}
+        <h3>Submission pending verification...</h3>
+        <script>
+            setTimeout(() => {
+                location.reload();
+            }, 5000);
+        </script>
+    {% endif %}
+
+    <table class="detail-table">
+        {% if submission.expected_time %}
+            <tr>
+                <td>Expected Score Time</td>
+                <td>{{ submission.expected_time|score }}</td>
+            </tr>
+        {% endif %}
+        {% for run in runs %}
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>Verifier OS</td>
+                <td style="max-width: 99%;">{{ run.os }}</td>
+            </tr>
+            <tr>
+                <td>Verify Date</td>
+                <td>{{ run.run_date }}</td>
+            </tr>
+        {% if run.error %}
+            <tr>
+                <td>Error</td>
+                <td>{{ run.error }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>Verify Status</td>
+                <td>
+                    {% if run.score.success %}
+                        Success
+                    {% else %}
+                        Failure
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Mission File</td>
+                <td>{{ run.score.mission }}</td>
+            </tr>
+            <tr>
+                <td>Level Name</td>
+                <td>{{ run.score.level_name }}</td>
+            </tr>
+            <tr>
+                <td>Score Time</td>
+                <td>
+                    {% if submission.expected_time and run.score.score_time != submission.expected_time %}
+                        <span class="desync">
+                            {{ run.score.score_time|score }}
+                            <strong>(Desync!)</strong>
+                        </span>
+                    {% else %}
+                        {{ run.score.score_time|score }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Elapsed Time</td>
+                <td>{{ run.score.elapsed_time|score }}</td>
+            </tr>
+            <tr>
+                <td>Bonus Time</td>
+                <td>{{ run.score.bonus_time|score }}</td>
+            </tr>
+            <tr>
+                <td>Gem Count</td>
+                <td>{{ run.score.gem_count }}</td>
+            </tr>
+            <tr>
+                <td>Gem Total</td>
+                <td>{{ run.score.gem_total }}</td>
+            </tr>
+            <tr>
+                <td>Average FPS</td>
+                <td>{{ run.score.fps }}</td>
+            </tr>
+            <tr>
+                <td>Frames Count (inc. loading)</td>
+                <td>{{ run.score.frames_count }}</td>
+            </tr>
+            <tr>
+                <td>Total Frame Time (inc. loading)</td>
+                <td>{{ run.score.frames_time|score }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'scores/base.html' %}
+{% load scores %}
+
+{% block title %}Discrepancies{% endblock %}
+
+{% block content %}
+    <h1>Discrepancies</h1>
+    <h3>(Pick a list!)</h3>
+    <ul>
+        {% for name, os1, os2 in categories %}
+            <li>
+                <a href="{% url 'recapp:compare' os1 os2 %}">{{ name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

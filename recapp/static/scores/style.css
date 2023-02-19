@@ -1,0 +1,55 @@
+nav.navbar {
+    background-color: #5cb85c;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+nav.navbar a, nav.navbar li {
+    color: #fff;
+}
+
+nav.navbar a:hover, nav.navbar a:focus {
+    background-color: #408140;
+}
+
+.score-list {
+    padding: 0;
+}
+
+.score-list li {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.spacer {
+    flex-grow: 100;
+}
+
+.score-list li div:first-child {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.score-list li div:first-child, .score-list li div:last-child {
+    flex-grow: 1;
+    word-break: break-word;
+}
+
+.score-list li div:last-child {
+    flex-shrink: 0;
+}
+
+.detail-table tr td {
+    padding: 0.25em;
+}
+
+.detail-table tr td:nth-child(1) {
+    padding-right: 2em;
+}
+
+.desync {
+    color: #c00;
+}

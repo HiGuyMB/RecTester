@@ -1,0 +1,79 @@
+{% load scores %}
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="pagination">
+            {% for offset, index in pages %}
+                <li class="page-item">
+                    <a class="page-link" href="?offset={{ offset }}">{{ index }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h2>{{ os1 }}</h2>
+        <ul class="score-list">
+            {% for run, _ in differences %}
+                <li>
+                    <div>
+                        <a href="{% url 'recapp:detail' run.submission.id %}">
+                            {{ run.submission.name }}
+                        </a>
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    {% if run.error %}
+                        <span>Errored</span>
+                    {% else %}
+                        {% if run.score.success %}
+                            {% if run.score.is_desync %}
+                                <span class="desync">{{ run.score.score_time|score }}</span>
+                            {% else %}
+                                <span>{{ run.score.score_time|score }}</span>
+                            {% endif %}
+                        {% else %}
+                            <span>Failed</span>
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>
+                    Nothing so far!
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h2>{{ os2 }}</h2>
+        <ul class="score-list">
+            {% for _, run in differences %}
+                <li>
+                    <div>
+                        <a href="{% url 'recapp:detail' run.submission.id %}">
+                            {{ run.submission.name }}
+                        </a>
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    {% if run.error %}
+                        <span>Errored</span>
+                    {% else %}
+                        {% if run.score.success %}
+                            {% if run.score.is_desync %}
+                                <span class="desync">{{ run.score.score_time|score }}</span>
+                            {% else %}
+                                <span>{{ run.score.score_time|score }}</span>
+                            {% endif %}
+                        {% else %}
+                            <span>Failed</span>
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>
+                    Nothing so far!
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

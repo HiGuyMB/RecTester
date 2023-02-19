@@ -1,0 +1,82 @@
+{% load scores %}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Mac vs Windows</h2>
+        <ul class="score-list">
+            {% for run, run2 in mac_win_diff %}
+                <li>
+                    <div>
+                        <a href="{% url 'recapp:detail' run.submission.id %}">
+                            {{ run.submission.name }}
+                        </a>
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    <div>
+                        {% if run.score.success %}
+                            {% if run.score.is_desync %}
+                                <span class="desync">{{ run.score.score_time|score }}</span>
+                            {% else %}
+                                {{ run.score.score_time|score }}
+                            {% endif %}
+                        {% else %}
+                            Failure
+                        {% endif %}(win) vs
+                        {% if run2.score.success %}
+                            {% if run2.score.is_desync %}
+                                <span class="desync">{{ run2.score.score_time|score }}</span>
+                            {% else %}
+                                {{ run2.score.score_time|score }}
+                            {% endif %}
+                        {% else %}
+                            Failure
+                        {% endif %}(mac)
+                    </div>
+                </li>
+            {% empty %}
+                <li>
+                    Nothing so far!
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h2>Newphys Broken</h2>
+        <ul class="score-list">
+            {% for run, run2 in problem_children %}
+                <li>
+                    <div>
+                        <a href="{% url 'recapp:detail' run.submission.id %}">
+                            {{ run.submission.name }}
+                        </a>
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    <div>
+                        {% if run.score.success %}
+                            {% if run.score.is_desync %}
+                                <span class="desync">{{ run.score.score_time|score }}</span>
+                            {% else %}
+                                {{ run.score.score_time|score }}
+                            {% endif %}
+                        {% else %}
+                            Failure
+                        {% endif %}(new) vs
+                        {% if run2.score.success %}
+                            {% if run2.score.is_desync %}
+                                <span class="desync">{{ run2.score.score_time|score }}</span>
+                            {% else %}
+                                {{ run2.score.score_time|score }}
+                            {% endif %}
+                        {% else %}
+                            Failure
+                        {% endif %}(win)
+                    </div>
+                </li>
+            {% empty %}
+                <li>
+                    Nothing so far!
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

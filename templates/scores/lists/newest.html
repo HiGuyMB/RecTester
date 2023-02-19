@@ -1,0 +1,85 @@
+{% load scores %}
+
+<div class="row">
+    <div class="col-md-6 col-lg-6">
+        {% if latest_submissions %}
+            <h2>Newest Uploads:</h2>
+            <ul class="score-list">
+            {% for submission in latest_submissions %}
+                <li>
+                    <div>
+                        <a href="{% url 'recapp:detail' submission.id %}">
+                            {{ submission.name }}
+                        </a>
+                        {% if submission.best_run %}
+                            {% with run=submission.best_run %}
+                                {% if run.error %}
+                                    <span>(Errored)</span>
+                                {% else %}
+                                    {% if run.score.success %}
+                                        <span>
+                                            {% if run.score.is_desync %}
+                                                ({{ run.os }}, <span class="desync">{{ run.score.score_time|score }}</span>)
+                                            {% else %}
+                                                ({{ run.os }}, {{ run.score.score_time|score }})
+                                            {% endif %}
+                                        </span>
+                                    {% else %}
+                                        <span>(Failed)</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endwith %}
+                        {% else %}
+                            <span>(Pending)</span>
+                        {% endif %}
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    <div>
+                        {{ submission.upload_date }}
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No recent submissions</p>
+        {% endif %}
+    </div>
+    <div class="col-md-6 col-lg-6">
+        {% if latest_runs %}
+            <h2>Newest Verified Submissions:</h2>
+            <ul class="score-list">
+            {% for score in latest_runs %}
+                <li>
+                    {# You gotta be kidding me #}
+                    <div>
+                        <a href="{% url 'recapp:detail' score.run.submission.id %}">
+                            {{ score.run.submission.name }}
+                        </a>
+                        {% if score.run.error %}
+                            <span>({{ score.run.os }}, Errored)</span>
+                        {% else %}
+                            {% if score.run.score.success %}
+                                <span>
+                                    {% if score.is_desync %}
+                                        ({{ score.run.os }}, <span class="desync">{{ score.score_time|score }}</span>)
+                                    {% else %}
+                                        ({{ score.run.os }}, {{ score.score_time|score }})
+                                    {% endif %}
+                                </span>
+                            {% else %}
+                                <span>({{ score.run.os }}, Failed)</span>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    <div>
+                        {{ score.run.run_date }}
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No recent verifications</p>
+        {% endif %}
+    </div>
+</div>

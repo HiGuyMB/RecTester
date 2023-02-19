@@ -1,0 +1,62 @@
+{% load scores %}
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Slowest Scores</h3>
+        <ul class="score-list">
+            {% for score in slowest_scores %}
+                <li>
+                    <div>
+                        <a href="{% url 'recapp:detail' score.run.submission.id %}">
+                            {{ score.run.submission.name }}
+                        </a>
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    <div>
+                        {% if score.is_desync %}
+                            <span class="desync">{{ score.score_time|score }}</span>
+                        {% else %}
+                            {{ score.score_time|score }}
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <h3>Slowest Realtime</h3>
+        <ul class="score-list">
+            {% for score in slowest_realtime %}
+                <li>
+                    <div>
+                        <a href="{% url 'recapp:detail' score.run.submission.id %}">
+                            {{ score.run.submission.name }}
+                        </a>
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    <div>
+                        {{ score.elapsed_time|score }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <h3>Lowest FPS</h3>
+        <ul class="score-list">
+            {% for score in lowest_fps %}
+                <li>
+                    <div>
+                        <a href="{% url 'recapp:detail' score.run.submission.id %}">
+                            {{ score.run.submission.name }}
+                        </a>
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    <div>
+                        {{ score.fps|floatformat }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

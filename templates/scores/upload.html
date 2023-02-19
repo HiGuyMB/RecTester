@@ -1,0 +1,19 @@
+{% extends 'scores/base.html' %}
+
+{% block title %}Upload{% endblock %}
+
+{% block content %}
+    <h1>Upload Replay:</h1>
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>{{ error }}</strong>
+        </div>
+    {% endif %}
+
+    <form action="{% url 'recapp:upload' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="rec" accept=".rec">
+        <input type="submit" value="Upload" class="btn btn-primary">
+    </form>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'scores/base.html' %}
+{% load scores %}
+
+{% block title %}Home{% endblock %}
+
+{% block jumbotron %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Replay Center</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>
+                        <br>
+                        <a href="{% url 'recapp:upload' %}" class="btn btn-primary">Upload Rec Files</a>
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    {% if live_runners|length > 0 %}
+                        <h3>Active Verifiers:</h3>
+                        <ul>
+                            {% for runner in live_runners %}
+                                <li><strong>{{ runner }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% include 'scores/lists/newest.html' %}
+    {% include 'scores/lists/discrepancies.html' %}
+    {% include 'scores/lists/best.html' %}
+    {% include 'scores/lists/worst.html' %}
+{% endblock %}

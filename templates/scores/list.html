@@ -1,0 +1,10 @@
+{% extends 'scores/base.html' %}
+{% load scores %}
+
+{% block title %}{{ list_name|title }}{% endblock %}
+
+{% block content %}
+    {% with 'scores/lists/'|add:list_name|add:".html" as template %}
+        {% include template %}
+    {% endwith %}
+{% endblock %}
