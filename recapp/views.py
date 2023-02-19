@@ -24,7 +24,7 @@ from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
 
 from RecTester import settings
-from recapp.models import Score, Submission, Run
+from recapp.models import Score, Submission, Run, guess_time
 from recapp.permissions import SubmissionPermissions
 from recapp.serializers import SubmissionSerializer, UserSerializer, GroupSerializer, ScoreSerializer, RunSerializer
 
@@ -356,6 +356,10 @@ def upload(request):
         'is_tas': request.POST.get('tas', 'off') == 'on',
         'expected_time': expected_time
     })
+
+    if expected_time is None:
+        sub.expected_time = guess_time(sub)
+        sub.save()
 
     return HttpResponseRedirect(reverse('recapp:detail', args=[sub.id]))
 

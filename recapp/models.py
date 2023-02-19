@@ -143,20 +143,6 @@ class Submission(models.Model):
         return sub
 
 
-@receiver(post_save, sender=Submission)
-def check_for_tas(sender, instance, created, **kwargs):
-    if created:
-        instance.is_tas = guess_tas(instance)
-        instance.save()
-
-
-@receiver(post_save, sender=Submission)
-def check_expected_time(sender, instance, created, **kwargs):
-    if created and instance.expected_time is None:
-        instance.expected_time = guess_time(instance)
-        instance.save()
-
-
 class Score(models.Model):
     success = models.BooleanField('Successful')
     mission = models.TextField('Mission File')
